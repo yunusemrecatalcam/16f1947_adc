@@ -36,13 +36,20 @@ void interrupt whatifiliall(void){
         while(!PIR4bits.TX2IF);
         TX2REG = result;
         
-        voltage = (result*1.000/fvr_val*1.000)* 2.048;
+        if(result <103)
+            result = 103;
+        if(result >140)
+            result = 140;
+        
+        while(!PIR4bits.TX2IF);
+        TX2REG = mah[result-103];
+        /*voltage = (result*1.000/fvr_val*1.000)* 2.048;
         
         while(!PIR4bits.TX2IF);
         TX2REG = (uint8_t) voltage;
         
         while(!PIR4bits.TX2IF);
-        TX2REG = (uint8_t) fmod((voltage*100),100);
+        TX2REG = (uint8_t) fmod((voltage*100),100);*/
             
     }
 }
